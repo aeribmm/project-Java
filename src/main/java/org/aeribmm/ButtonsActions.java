@@ -132,7 +132,7 @@ public class ButtonsActions {
 
         addStudentButton.addActionListener(e -> {
             List<StudentModel> list = dao.getAllStudents();
-
+            System.out.println(list);
         });
     }
 }
