@@ -6,7 +6,25 @@ import java.awt.*;
 import java.util.List;
 
 public class LabelCreator {
-    private WindowStyle style = new WindowStyle();
+    private WindowStyle style;
+    private DAO dao;
+    private JLabel resultIdLabel;
+    private JLabel resultNameLabel;
+    private JLabel resultLastNameLabel;
+    private JLabel resultAgeLabel;
+    private JLabel resultGradeLabel;
+
+    public LabelCreator() {
+        this(new WindowStyle(),new DAO());
+    }
+
+
+    public LabelCreator(WindowStyle style, DAO dao) {
+        this.style = style;
+        this.dao = dao;
+    }
+
+
     public void showAll(JTable studentTable){
         JFrame frame = new JFrame("All Students");
         frame.setSize(1080, 720);
@@ -32,11 +50,11 @@ public class LabelCreator {
     }
     public JFrame createSearchFrame(){
         JFrame searchFrame = new JFrame("Search Student");
-        searchFrame.setLocationRelativeTo(null);
         searchFrame.setSize(500, 300);
         searchFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         searchFrame.setLayout(new BorderLayout());
         style.searchFrameStyle(searchFrame);
+        searchFrame.setLocationRelativeTo(null);
         return searchFrame;
     }
     public JPanel createInputPanel(JLabel idLabel,JTextField idField,JLabel lastNameLabel,JTextField lastNameField,JButton searchButton){
@@ -85,11 +103,11 @@ public class LabelCreator {
         JPanel resultPanel = new JPanel(new GridLayout(5, 1)); // или другой layout
         resultPanel.setBackground(new Color(45, 45, 45));
 
-        JLabel resultIdLabel = createStyledLabel("ID: ");
-        JLabel resultNameLabel = createStyledLabel("Name: ");
-        JLabel resultLastNameLabel = createStyledLabel("Last name: ");
-        JLabel resultAgeLabel = createStyledLabel("Age: ");
-        JLabel resultGradeLabel = createStyledLabel("Grade: ");
+        resultIdLabel = createStyledLabel("ID: ");
+        resultNameLabel = createStyledLabel("Name: ");
+        resultLastNameLabel = createStyledLabel("Last name: ");
+        resultAgeLabel = createStyledLabel("Age: ");
+        resultGradeLabel = createStyledLabel("Grade: ");
 
         resultPanel.add(resultIdLabel);
         resultPanel.add(resultNameLabel);
@@ -103,5 +121,40 @@ public class LabelCreator {
         JLabel label = new JLabel(text);
         label.setForeground(Color.LIGHT_GRAY);
         return label;
+    }
+    public void handleSearchButtonClick(JTextField idField,JPanel resultPanel,JFrame searchFrame,JTextField lastNameField) {
+        String id = idField.getText().trim();
+        String lastName = lastNameField.getText().trim();
+        StudentModel student = null;
+        if (!id.isEmpty()) {
+            student = dao.searchById(id);
+        }else if(!lastName.isEmpty()){
+            student = dao.searchByLastName(lastName);
+        }
+            if (student != null) {
+                resultPanel.removeAll();
+                resultPanel.add(resultIdLabel);
+                resultPanel.add(resultNameLabel);
+                resultPanel.add(resultLastNameLabel);
+                resultPanel.add(resultAgeLabel);
+                resultPanel.add(resultGradeLabel);
+                resultIdLabel.setText("ID: " + student.getId());
+                resultNameLabel.setText("Name: " + student.getName());
+                resultLastNameLabel.setText("Last name: " + student.getLastName());
+                resultAgeLabel.setText("Age: " + student.getAge());
+                resultGradeLabel.setText("Grade: " + student.getGrade());
+                resultPanel.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(
+                        searchFrame,
+                        "Student not found",
+                        "Results",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
+            }
+            searchFrame.revalidate();
+            searchFrame.repaint();
+        idField.setText("");
+        lastNameField.setText("");
     }
 }
