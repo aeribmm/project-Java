@@ -4,9 +4,15 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Application extends JFrame {
-    DAO dao = new DAO();
-    private ButtonsActions but = new ButtonsActions();
+    private DAO dao;
+    private ButtonsActions but;
+    public Application(DAO dao, ButtonsActions but){
+        this.dao = dao;
+        this.but = but;
+    }
+
     public Application() {
+        this(new DAO(),new ButtonsActions());
         setTitle("Student Management System");
         setSize(1080, 720);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -16,6 +22,7 @@ public class Application extends JFrame {
         getContentPane().setBackground(new Color(45, 45, 45));
         createMainMenu();
     }
+
 
     private void createMainMenu() {
         // Создаем панель для кнопок с вертикальным расположением и центровкой

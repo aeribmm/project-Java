@@ -32,21 +32,7 @@ public class DAO extends JFrame{
         }
         return students;
     }
-    public JTable getAllStudents(List<StudentModel> list){
-        String [] columns = {"id","name","lastName","age","grade"};
-        DefaultTableModel table = new DefaultTableModel(columns,0);
-        for (StudentModel student : list) {
-            Object[] row = {
-                    student.getId(),
-                    student.getName(),
-                    student.getLastName(),
-                    student.getAge(),
-                    student.getGrade()
-            };
-            table.addRow(row);
-        }
-        return new JTable(table);
-    }
+
 
     public StudentModel searchStudentById(List<StudentModel> list,String id){
         for(StudentModel student : list){
@@ -60,7 +46,7 @@ public class DAO extends JFrame{
 
     public StudentModel searchStudentByLastName(List<StudentModel> list,String lastName){
         for(StudentModel student : list){
-            if(student.getName().equals(lastName)){
+            if(student.getLastName().equals(lastName)){
                 return student;
             }
         }
