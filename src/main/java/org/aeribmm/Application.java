@@ -17,27 +17,22 @@ public class Application extends JFrame {
         setSize(1080, 720);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-
-        // Устанавливаем главный цвет фона и создаем панель меню
         getContentPane().setBackground(new Color(45, 45, 45));
         createMainMenu();
     }
 
 
     private void createMainMenu() {
-        // Создаем панель для кнопок с вертикальным расположением и центровкой
         JPanel menuPanel = new JPanel();
         menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
         menuPanel.setBackground(new Color(45, 45, 45)); // Цвет фона панели
 
-        // Заголовок
         JLabel titleLabel = new JLabel("Student Management System", JLabel.CENTER);
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
         titleLabel.setForeground(new Color(200, 200, 200));
         titleLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
 
-        // Создаем кнопки и настраиваем их стиль
         JButton showAllButton = createMenuButton("Show All Students");
         JButton showStudentButton = createMenuButton("Show Student");
         JButton addStudentButton = createMenuButton("Add New Student");
@@ -45,7 +40,6 @@ public class Application extends JFrame {
         JButton updateStudentButton = createMenuButton("Update Student");
         JButton calculateGradeButton = createMenuButton("Calculate Average Grade");
 
-        // Добавляем элементы в панель
         menuPanel.add(titleLabel);
         menuPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         menuPanel.add(showAllButton);
@@ -77,13 +71,12 @@ public class Application extends JFrame {
         button.setForeground(Color.WHITE);
         button.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 
-        // Добавляем эффект наведения
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                button.setBackground(new Color(70, 130, 180)); // Цвет при наведении
+                button.setBackground(new Color(70, 130, 180));
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                button.setBackground(new Color(60, 60, 60)); // Цвет по умолчанию
+                button.setBackground(new Color(60, 60, 60));
             }
         });
         return button;

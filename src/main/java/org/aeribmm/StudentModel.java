@@ -7,13 +7,27 @@ public class StudentModel {
     private String lastName;
     private int age;
     private double grade;
+    private DAO dao;
 
-    public StudentModel(String id, String name,String lastName, int age, double grade) {
+    public StudentModel(DAO dao) {
+        this.dao = dao;
+    }
+
+    public StudentModel(String id, String name, String lastName, int age, double grade) {
+        this(new DAO());
         this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.age = age;
         this.grade = grade;
+    }
+
+    public StudentModel(String name, String lastName, int age) {
+        this.id = dao.generateFreeId();
+        this.name = name;
+        this.lastName = lastName;
+        this.age = age;
+        this.grade = 0;
     }
 
     public StudentModel() {
@@ -59,6 +73,6 @@ public class StudentModel {
     }
 
     public void show(){
-        System.out.println("id = " + getId() + " name = " + getName() + " age = " + getAge() + " grade = " + getGrade());
+        System.out.println("id = " + getId() + " name = " + getName() + "last name: " + getLastName() + " age = " + getAge() + " grade = " + getGrade());
     }
 }

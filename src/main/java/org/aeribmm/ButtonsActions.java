@@ -8,6 +8,7 @@ import java.util.List;
 
 public class ButtonsActions {
     private DAO dao;
+    private NewStudentWindow newWindow;
     private WindowStyle styles;
     private LabelCreator creator;
     private JFrame searchFrame;
@@ -20,13 +21,14 @@ public class ButtonsActions {
     private JPanel resultPanel;
 
     public ButtonsActions() {
-        this(new DAO(),new WindowStyle(),new LabelCreator());
+        this(new DAO(),new WindowStyle(),new LabelCreator(),new NewStudentWindow());
     }
 
-    public ButtonsActions(DAO dao, WindowStyle styles, LabelCreator creator) {
+    public ButtonsActions(DAO dao, WindowStyle styles, LabelCreator creator,NewStudentWindow window) {
         this.dao = dao;
         this.styles = styles;
         this.creator = creator;
+        this.newWindow = window;
         searchFrame = creator.createSearchFrame();
         idField = creator.createIdField();
         lastNameField = creator.createLastNameField();
@@ -55,6 +57,10 @@ public class ButtonsActions {
             searchButton.addActionListener(event -> {
                 creator.handleSearchButtonClick(idField,resultPanel,searchFrame,lastNameField);
             });
+        });//find by id or lastName
+
+        addStudentButton.addActionListener(e -> {
+            newWindow.create();
         });
     }
 }

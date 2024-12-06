@@ -1,13 +1,16 @@
 package org.aeribmm;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-public class DAO extends JFrame{
+public class DAO extends JFrame implements StudentManager{
+
+    private LabelCreator creator;
 
     private final String url = "jdbc:postgresql://localhost:5432/studentsApp";
     private final String username = "postgres";
@@ -16,6 +19,9 @@ public class DAO extends JFrame{
 
     private final String findById = "SELECT * FROM students WHERE id = ?";
     private final String findByLastName = "SELECT * FROM students WHERE \"lastName\" = ?";
+    private final String generateId = "SELECT id FROM students ORDER BY id";
+    private final String addNew = "INSERT INTO studenys ";
+
 
     public List<StudentModel> getAllStudents() {
         List<StudentModel> students = new ArrayList<>();
@@ -78,7 +84,44 @@ public class DAO extends JFrame{
         return student;
     }
 
+    public void removeStudent(String id){
 
+    }
+    public String generateFreeId() {
+        try (Connection connection = DriverManager.getConnection(url, username, password);
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(generateId)) {
+            Set<String> existingIds = new HashSet<>();
+            while (resultSet.next()) {
+                existingIds.add(resultSet.getString("id"));
+            }
+            int currentId = 1;
+            String currentIdStr = String.valueOf(currentId);
+            while (existingIds.contains(currentIdStr)) {
+                currentId++;
+                currentIdStr = String.valueOf(currentId);
+            }
+            return currentIdStr;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error", e);
+        }
+    }
 
+    public void addStudent(String name,String lastName,int age){
+        String message = "Cannot create a student with this age";
+        if(age < 0 || age > 100){
+            JOptionPane.showMessageDialog(null, message, "Ошибка", JOptionPane.ERROR_MESSAGE);
+            /// TODO: 12/4/2024 add students method
+        }
+        StudentModel student = new StudentModel(name,lastName,age);
+        addToDatabase(student);
+        System.out.println("name: "  + student.getName()+ "last name: " + student.getLastName() + "age: " + student.getAge() + "id: " + student.getId() + "grade: " + student.getGrade());
+
+    }
+
+    public void addToDatabase(StudentModel studentModel){
+        
+    }
 
 }
