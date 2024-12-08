@@ -4,15 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Application extends JFrame {
-    private DAO dao;
     private ButtonsActions but;
-    public Application(DAO dao, ButtonsActions but){
-        this.dao = dao;
+    public Application(ButtonsActions but){
         this.but = but;
     }
 
     public Application() {
-        this(new DAO(),new ButtonsActions());
+        this(new ButtonsActions());
         setTitle("Student Management System");
         setSize(1080, 720);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

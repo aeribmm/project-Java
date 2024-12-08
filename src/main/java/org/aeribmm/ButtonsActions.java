@@ -61,7 +61,7 @@ public class ButtonsActions {
 
         addStudentButton.addActionListener(e -> {
             newWindow.create();
-        });
+        });//create a new student
     }
 }
 

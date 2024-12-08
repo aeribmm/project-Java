@@ -23,6 +23,7 @@ public class StudentModel {
     }
 
     public StudentModel(String name, String lastName, int age) {
+        this(new DAO());
         this.id = dao.generateFreeId();
         this.name = name;
         this.lastName = lastName;
@@ -72,7 +73,14 @@ public class StudentModel {
         this.grade = grade;
     }
 
-    public void show(){
-        System.out.println("id = " + getId() + " name = " + getName() + "last name: " + getLastName() + " age = " + getAge() + " grade = " + getGrade());
+    @Override
+    public String toString() {
+        return "StudentModel{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                ", grade=" + grade +
+                '}';
     }
 }

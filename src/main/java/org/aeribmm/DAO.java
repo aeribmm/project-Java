@@ -20,7 +20,9 @@ public class DAO extends JFrame implements StudentManager{
     private final String findById = "SELECT * FROM students WHERE id = ?";
     private final String findByLastName = "SELECT * FROM students WHERE \"lastName\" = ?";
     private final String generateId = "SELECT id FROM students ORDER BY id";
-    private final String addNew = "INSERT INTO studenys ";
+    private final  String checkIfExist ="SELECT COUNT(*) FROM students WHERE name = ? AND \"lastName\" = ? AND age = ?";
+
+    private final String insertStudent = "INSERT INTO students (id,name, \"lastName\", age, grade) VALUES (?,?, ?, ?, ?)";
 
 
     public List<StudentModel> getAllStudents() {
@@ -40,6 +42,25 @@ public class DAO extends JFrame implements StudentManager{
             e.printStackTrace();
         }
         return students;
+    }
+    public void addStudent(StudentModel student) {
+        try (Connection connection = DriverManager.getConnection(url, username, password);
+            PreparedStatement preparedStatement = connection.prepareStatement(insertStudent)) {
+            preparedStatement.setString(1,student.getId());
+            preparedStatement.setString(2, student.getName());
+            preparedStatement.setString(3, student.getLastName());
+            preparedStatement.setInt(4, student.getAge());
+            preparedStatement.setDouble(5, student.getGrade());
+            int rowsInserted = preparedStatement.executeUpdate();
+            if(rowsInserted> 0){
+                JOptionPane.showMessageDialog(null,"Success");
+            }else{
+                JOptionPane.showMessageDialog(null,"Failed to add student");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println(student);
     }
 
     public StudentModel searchById(String id){
@@ -108,20 +129,22 @@ public class DAO extends JFrame implements StudentManager{
         }
     }
 
-    public void addStudent(String name,String lastName,int age){
-        String message = "Cannot create a student with this age";
-        if(age < 0 || age > 100){
-            JOptionPane.showMessageDialog(null, message, "Ошибка", JOptionPane.ERROR_MESSAGE);
-            /// TODO: 12/4/2024 add students method
+    public boolean checkIfStudentExists(String firstName, String lastName,int age ){
+        try (Connection connection = DriverManager.getConnection(url, username, password);
+             PreparedStatement preparedStatement = connection.prepareStatement(checkIfExist)) {
+            preparedStatement.setString(1, firstName);
+            preparedStatement.setString(2, lastName);
+            preparedStatement.setInt(3, age);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        StudentModel student = new StudentModel(name,lastName,age);
-        addToDatabase(student);
-        System.out.println("name: "  + student.getName()+ "last name: " + student.getLastName() + "age: " + student.getAge() + "id: " + student.getId() + "grade: " + student.getGrade());
-
+        return false;
     }
 
-    public void addToDatabase(StudentModel studentModel){
-        
-    }
+
 
 }

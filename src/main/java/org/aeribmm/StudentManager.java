@@ -7,7 +7,7 @@ public interface StudentManager {
     StudentModel searchByLastName(String lastName);
     StudentModel searchById(String id);
     List<StudentModel> getAllStudents();
-    void addStudent(String name,String lastName,int age) ;
+    void addStudent(StudentModel student) ;
 
     void removeStudent(String id);
 

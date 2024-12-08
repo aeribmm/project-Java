@@ -34,4 +34,5 @@ public class WindowStyle {
         lastNameField.setCaretColor(Color.WHITE);
         lastNameField.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
     }
+
 }

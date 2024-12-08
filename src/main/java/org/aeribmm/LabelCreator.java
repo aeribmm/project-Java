@@ -117,7 +117,7 @@ public class LabelCreator {
 
         return resultPanel;
     }
-    private JLabel createStyledLabel(String text) {
+    public JLabel createStyledLabel(String text) {
         JLabel label = new JLabel(text);
         label.setForeground(Color.LIGHT_GRAY);
         return label;

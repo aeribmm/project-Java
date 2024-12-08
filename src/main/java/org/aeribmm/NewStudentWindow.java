@@ -1,54 +1,68 @@
 package org.aeribmm;
 
+import org.w3c.dom.ls.LSOutput;
+
 import javax.swing.*;
 import java.awt.*;
 import java.sql.SQLException;
 
 public class NewStudentWindow extends JDialog {
-    private JTextField firstNameField;
+    private JFrame panel;
+    private JPanel inputPanel;
+    private JTextField idField;
     private JTextField lastNameField;
-    private JTextField ageField;
-    private DAO dao;
+    private JLabel idLabel;
+    private JLabel lastNameLabel;
+    private JButton searchButton;
+    private JPanel resultPanel;
+
     private WindowStyle style;
-    public NewStudentWindow(){
-        this(new DAO(),new WindowStyle());
+    private Checker check;
+    private LabelCreator creator;
+    public NewStudentWindow(Checker check,LabelCreator creator) {
+        this.check = check;
+        this.creator = creator;
     }
 
-    public NewStudentWindow(DAO dao,WindowStyle style) {
-        this.dao = dao;
+    public NewStudentWindow(){
+        this(new WindowStyle());
+    }
+
+    public NewStudentWindow(WindowStyle style) {
+        this(new Checker(),new LabelCreator());
         this.style = style;
     }
 
     public void create() {
-        JPanel panel = new JPanel(new GridLayout(3, 2));
+        panel = creator.createSearchFrame();
+        inputPanel = new JPanel(new GridLayout(4, 2, 10, 10));
+        inputPanel.setBackground(new Color(45, 45, 45));
+        JLabel nameLabel = creator.createStyledLabel("Name:");
+        JTextField nameField = creator.createIdField();
+        JLabel lastNameLabel = creator.createStyledLabel("Last Name:");
+        JTextField lastNameField = creator.createLastNameField();
+        JLabel ageLabel = creator.createStyledLabel("Age:");
+        JTextField ageField = creator.createIdField();
+        inputPanel.add(nameLabel);
+        inputPanel.add(nameField);
+        inputPanel.add(lastNameLabel);
+        inputPanel.add(lastNameField);
+        inputPanel.add(ageLabel);
+        inputPanel.add(ageField);
         JPanel buttonPanel = new JPanel();
-        firstNameField = new JTextField(20);
-        lastNameField = new JTextField(20);
-        ageField = new JTextField(5);
-        panel.add(new JLabel("Name:"));
-        panel.add(firstNameField);
-        panel.add(new JLabel("Last Name:"));
-        panel.add(lastNameField);
-        panel.add(new JLabel("Age:"));
-        panel.add(ageField);
-        JButton addButton = new JButton("Add");
+        buttonPanel.setBackground(new Color(45, 45, 45));
+        JButton addButton = creator.searchButton();
+        addButton.setText("Add");
 
-        style.lastNameField(lastNameField);
-        style.lastNameField(firstNameField);
-        style.lastNameField(ageField);
         buttonPanel.add(addButton);
         addButton.addActionListener(e -> {
-                String name = firstNameField.getText().trim();
-                String lastName = lastNameField.getText().trim();
-                int age = Integer.parseInt(ageField.getText().trim());
-                dao.addStudent(name, lastName, age);
+            check.isFull(nameField,lastNameField,ageField);
         });
-//        dao.addStudent(name,lastName,age);
-        add(panel, BorderLayout.CENTER);
-        add(buttonPanel, BorderLayout.SOUTH);
+        panel.add(inputPanel, BorderLayout.CENTER);
+        panel.add(buttonPanel, BorderLayout.SOUTH);
 
-        pack();
-        setLocationRelativeTo(null);
-        setVisible(true);
+        panel.pack();
+        panel.setLocationRelativeTo(null);
+        panel.setVisible(true);
     }
 }
