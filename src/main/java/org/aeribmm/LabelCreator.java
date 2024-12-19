@@ -48,8 +48,8 @@ public class LabelCreator {
         }
         return new JTable(table);
     }
-    public JFrame createSearchFrame(){
-        JFrame searchFrame = new JFrame("Search Student");
+    public JFrame createSearchFrame(String text){
+        JFrame searchFrame = new JFrame(text);
         searchFrame.setSize(500, 300);
         searchFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         searchFrame.setLayout(new BorderLayout());
@@ -65,6 +65,14 @@ public class LabelCreator {
         inputPanel.add(lastNameLabel);
         inputPanel.add(lastNameField);
         inputPanel.add(searchButton);
+        return inputPanel;
+    }
+    public JPanel createInputPanel(JLabel frame,JTextField field,JButton button){
+        JPanel inputPanel = new JPanel(new GridLayout(4, 1));
+        inputPanel.setBackground(new Color(45, 45, 45));
+        inputPanel.add(frame);
+        inputPanel.add(field);
+        inputPanel.add(button);
         return inputPanel;
     }
     public JTextField createIdField(){
@@ -87,8 +95,8 @@ public class LabelCreator {
         lastNameLabel.setForeground(Color.LIGHT_GRAY);
         return lastNameLabel;
     }
-    public JButton searchButton(){
-        JButton searchButton =new JButton("Search");
+    public JButton searchButton(String text){
+        JButton searchButton =new JButton(text);
         searchButton.setBackground(new Color(100, 100, 100));
         searchButton.setForeground(Color.WHITE);
         return searchButton;
@@ -129,7 +137,7 @@ public class LabelCreator {
         if (!id.isEmpty()) {
             student = dao.searchById(id);
         }else if(!lastName.isEmpty()){
-            student = dao.searchByLastName(lastName);
+            student = dao.searchByLastName(lastName.trim());
         }
             if (student != null) {
                 resultPanel.removeAll();

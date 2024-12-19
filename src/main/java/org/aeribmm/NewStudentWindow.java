@@ -7,14 +7,11 @@ import java.awt.*;
 import java.sql.SQLException;
 
 public class NewStudentWindow extends JDialog {
-    private JFrame panel;
-    private JPanel inputPanel;
-    private JTextField idField;
+    private JFrame searchFrame;
     private JTextField lastNameField;
-    private JLabel idLabel;
     private JLabel lastNameLabel;
-    private JButton searchButton;
-    private JPanel resultPanel;
+    private JButton removeStudent;
+    private JPanel inputPanel;
 
     private WindowStyle style;
     private Checker check;
@@ -34,35 +31,34 @@ public class NewStudentWindow extends JDialog {
     }
 
     public void create() {
-        panel = creator.createSearchFrame();
-        inputPanel = new JPanel(new GridLayout(4, 2, 10, 10));
-        inputPanel.setBackground(new Color(45, 45, 45));
-        JLabel nameLabel = creator.createStyledLabel("Name:");
-        JTextField nameField = creator.createIdField();
-        JLabel lastNameLabel = creator.createStyledLabel("Last Name:");
-        JTextField lastNameField = creator.createLastNameField();
-        JLabel ageLabel = creator.createStyledLabel("Age:");
-        JTextField ageField = creator.createIdField();
-        inputPanel.add(nameLabel);
-        inputPanel.add(nameField);
-        inputPanel.add(lastNameLabel);
-        inputPanel.add(lastNameField);
-        inputPanel.add(ageLabel);
-        inputPanel.add(ageField);
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setBackground(new Color(45, 45, 45));
-        JButton addButton = creator.searchButton();
-        addButton.setText("Add");
+        // Создание основного окна
+        searchFrame = creator.createSearchFrame("Add Student");
 
-        buttonPanel.add(addButton);
-        addButton.addActionListener(e -> {
-            check.isFull(nameField,lastNameField,ageField);
+        // Поле для ввода фамилии
+        lastNameField = creator.createLastNameField();
+        lastNameLabel = creator.createLastNameLabel();
+        removeStudent = creator.searchButton("Add Student");
+
+        // Создание панели ввода
+        inputPanel = creator.createInputPanel(lastNameLabel, lastNameField, removeStudent);
+
+        // Настройка окна
+        searchFrame.add(inputPanel, BorderLayout.CENTER);
+        searchFrame.setVisible(true);
+
+        // Обработчик кнопки удаления
+        removeStudent.addActionListener(event -> {
+            String lastName = lastNameField.getText().trim();
+            if (lastName.isEmpty()) {
+                JOptionPane.showMessageDialog(searchFrame, "Please enter the last name.", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+//                if (success) {
+//                    JOptionPane.showMessageDialog(searchFrame, "Student successfully deleted.", "Success", JOptionPane.INFORMATION_MESSAGE);
+//                    lastNameField.setText("");
+//                } else {
+//                    JOptionPane.showMessageDialog(searchFrame, "No student found with that last name.", "Error", JOptionPane.ERROR_MESSAGE);
+//                }
+            }
         });
-        panel.add(inputPanel, BorderLayout.CENTER);
-        panel.add(buttonPanel, BorderLayout.SOUTH);
-
-        panel.pack();
-        panel.setLocationRelativeTo(null);
-        panel.setVisible(true);
     }
 }

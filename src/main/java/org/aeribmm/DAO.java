@@ -9,22 +9,15 @@ import java.util.List;
 import java.util.Set;
 
 public class DAO extends JFrame implements StudentManager{
-
-    private LabelCreator creator;
-
     private final String url = "jdbc:postgresql://localhost:5432/studentsApp";
     private final String username = "postgres";
     private final String password = "3152";
     private final String findAll = "SELECT * FROM students";
-
     private final String findById = "SELECT * FROM students WHERE id = ?";
     private final String findByLastName = "SELECT * FROM students WHERE \"lastName\" = ?";
     private final String generateId = "SELECT id FROM students ORDER BY id";
     private final  String checkIfExist ="SELECT COUNT(*) FROM students WHERE name = ? AND \"lastName\" = ? AND age = ?";
-
     private final String insertStudent = "INSERT INTO students (id,name, \"lastName\", age, grade) VALUES (?,?, ?, ?, ?)";
-
-
     public List<StudentModel> getAllStudents() {
         List<StudentModel> students = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(url, username, password);
