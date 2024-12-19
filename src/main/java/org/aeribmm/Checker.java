@@ -26,6 +26,7 @@ public class Checker {
             int age = Integer.parseInt(temp);
             if(age < 0 || age > 100){
                 JOptionPane.showMessageDialog(null,"Cannot create a student with this age");
+                return;
             }
             a = age;
         }catch(NumberFormatException e){
@@ -33,10 +34,10 @@ public class Checker {
         }
         StudentModel student = new StudentModel(name,lastName,a);
         boolean exist = dao.checkIfStudentExists(student.getName(), student.getLastName(),student.getAge());
-        if(exist){
-            JOptionPane.showMessageDialog(null,"Student already exist");
-        }else {
+        if(!exist){
             dao.addStudent(student);
+        }else {
+            JOptionPane.showMessageDialog(null,"Student already exist");
         }
     }
 }

@@ -48,8 +48,8 @@ public class LabelCreator {
         }
         return new JTable(table);
     }
-    public JFrame createSearchFrame(){
-        JFrame searchFrame = new JFrame("Search Student");
+    public JFrame createSearchFrame(String text){
+        JFrame searchFrame = new JFrame(text);
         searchFrame.setSize(500, 300);
         searchFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         searchFrame.setLayout(new BorderLayout());
@@ -67,6 +67,17 @@ public class LabelCreator {
         inputPanel.add(searchButton);
         return inputPanel;
     }
+    public JPanel createInputPanel1(JLabel nameLabel,JTextField nameField,JLabel lastNameLabel,JTextField lastNameField,JLabel ageLabel,JTextField ageField){
+        JPanel inputPanel = new JPanel(new GridLayout(4, 1));
+        inputPanel.setBackground(new Color(45, 45, 45));
+        inputPanel.add(nameLabel);
+        inputPanel.add(nameField);
+        inputPanel.add(lastNameLabel);
+        inputPanel.add(lastNameField);
+        inputPanel.add(ageLabel);
+        inputPanel.add(ageField);
+        return inputPanel;
+    }
     public JTextField createIdField(){
         JTextField idField = new JTextField(15);
         style.idField(idField);
@@ -77,18 +88,18 @@ public class LabelCreator {
         style.lastNameField(lastNameField);
         return lastNameField;
     }
-    public JLabel createIdLabel(){
-        JLabel idLabel = new JLabel("Enter Student ID:");
+    public JLabel createIdLabel(String text){
+        JLabel idLabel = new JLabel(text);
         idLabel.setForeground(Color.LIGHT_GRAY);
         return idLabel;
     }
-    public JLabel createLastNameLabel(){
-        JLabel lastNameLabel = new JLabel("Or Enter Last Name:");
+    public JLabel createLastNameLabel(String text){
+        JLabel lastNameLabel = new JLabel(text);
         lastNameLabel.setForeground(Color.LIGHT_GRAY);
         return lastNameLabel;
     }
-    public JButton searchButton(){
-        JButton searchButton =new JButton("Search");
+    public JButton searchButton(String text){
+        JButton searchButton =new JButton(text);
         searchButton.setBackground(new Color(100, 100, 100));
         searchButton.setForeground(Color.WHITE);
         return searchButton;
@@ -100,7 +111,7 @@ public class LabelCreator {
         return resultPanel;
     }
     public JPanel createResultLabels() {
-        JPanel resultPanel = new JPanel(new GridLayout(5, 1)); // или другой layout
+        JPanel resultPanel = new JPanel(new GridLayout(5, 1));
         resultPanel.setBackground(new Color(45, 45, 45));
 
         resultIdLabel = createStyledLabel("ID: ");

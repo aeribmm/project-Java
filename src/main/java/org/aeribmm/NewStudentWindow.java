@@ -7,18 +7,17 @@ import java.awt.*;
 import java.sql.SQLException;
 
 public class NewStudentWindow extends JDialog {
-    private JFrame panel;
-    private JPanel inputPanel;
-    private JTextField idField;
-    private JTextField lastNameField;
-    private JLabel idLabel;
-    private JLabel lastNameLabel;
-    private JButton searchButton;
-    private JPanel resultPanel;
-
     private WindowStyle style;
     private Checker check;
     private LabelCreator creator;
+    private JFrame frame;
+    private JPanel panel;
+    private JTextField name;
+    private JTextField lastName;
+    private JTextField age;
+    private JLabel nameLabel;
+    private JLabel lastNameLabel;
+    private JLabel ageLabel;
     public NewStudentWindow(Checker check,LabelCreator creator) {
         this.check = check;
         this.creator = creator;
@@ -32,37 +31,27 @@ public class NewStudentWindow extends JDialog {
         this(new Checker(),new LabelCreator());
         this.style = style;
     }
+    public void create(){
+        frame = creator.createSearchFrame("Add new student to data base");
 
-    public void create() {
-        panel = creator.createSearchFrame();
-        inputPanel = new JPanel(new GridLayout(4, 2, 10, 10));
-        inputPanel.setBackground(new Color(45, 45, 45));
-        JLabel nameLabel = creator.createStyledLabel("Name:");
-        JTextField nameField = creator.createIdField();
-        JLabel lastNameLabel = creator.createStyledLabel("Last Name:");
-        JTextField lastNameField = creator.createLastNameField();
-        JLabel ageLabel = creator.createStyledLabel("Age:");
-        JTextField ageField = creator.createIdField();
-        inputPanel.add(nameLabel);
-        inputPanel.add(nameField);
-        inputPanel.add(lastNameLabel);
-        inputPanel.add(lastNameField);
-        inputPanel.add(ageLabel);
-        inputPanel.add(ageField);
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setBackground(new Color(45, 45, 45));
-        JButton addButton = creator.searchButton();
-        addButton.setText("Add");
 
-        buttonPanel.add(addButton);
-        addButton.addActionListener(e -> {
-            check.isFull(nameField,lastNameField,ageField);
-        });
-        panel.add(inputPanel, BorderLayout.CENTER);
-        panel.add(buttonPanel, BorderLayout.SOUTH);
-
-        panel.pack();
-        panel.setLocationRelativeTo(null);
-        panel.setVisible(true);
+        nameLabel = creator.createLastNameLabel("Name: ");
+        name = creator.createLastNameField();
+        lastNameLabel = creator.createLastNameLabel("Last name: ");
+        lastName = creator.createLastNameField();
+        ageLabel = creator.createIdLabel("Age: ");
+        age = creator.createLastNameField();
+        panel = creator.createInputPanel1(nameLabel,name,lastNameLabel,lastName,ageLabel,age);
+        JButton add = creator.searchButton("Add");
+        panel.add(nameLabel);
+        panel.add(name);
+        panel.add(lastNameLabel);
+        panel.add(lastName);
+        panel.add(ageLabel);
+        panel.add(age);
+        panel.add(add);
+        frame.add(panel, BorderLayout.NORTH);
+        frame.setVisible(true);
     }
+
 }
