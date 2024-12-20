@@ -26,8 +26,8 @@ public class ShowStudentWindow {
         searchFrame = creator.createSearchFrame("Find a student");
         idField = creator.createIdField();
         lastNameField = creator.createLastNameField();
-        idLabel = creator.createIdLabel();
-        lastNameLabel = creator.createLastNameLabel();
+        idLabel = creator.createIdLabel("Enter id: ");
+        lastNameLabel = creator.createLastNameLabel("Or enter last name: ");
         searchButton = creator.searchButton("Find student");
         resultPanel = creator.createResultLabels();
         inputPanel = creator.createInputPanel(idLabel,idField,lastNameLabel,lastNameField,searchButton);

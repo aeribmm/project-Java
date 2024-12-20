@@ -97,7 +97,7 @@ public class LabelCreator {
         style.lastNameField(lastNameField);
         return lastNameField;
     }
-    public JLabel createIdLabel(String text){
+    public JLabel createIdLabel(String text) {
         JLabel idLabel = new JLabel(text);
         idLabel.setForeground(Color.LIGHT_GRAY);
         return idLabel;
