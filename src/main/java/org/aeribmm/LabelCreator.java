@@ -48,7 +48,7 @@ public class LabelCreator {
         }
         return new JTable(table);
     }
-    public JFrame createSearchFrame(String text){
+    public JFrame  createSearchFrame(String text){
         JFrame searchFrame = new JFrame(text);
         searchFrame.setSize(500, 300);
         searchFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -67,6 +67,18 @@ public class LabelCreator {
         inputPanel.add(searchButton);
         return inputPanel;
     }
+    public JPanel createInputPanelForNewStudent(JLabel idLabel,JTextField idField,JLabel lastNameLabel,JTextField lastNameField,JLabel ageLabel,JTextField age){
+        JPanel inputPanel = new JPanel(new GridLayout(4, 1));
+        inputPanel.setBackground(new Color(45, 45, 45));
+        inputPanel.add(idLabel);
+        inputPanel.add(idField);
+        inputPanel.add(lastNameLabel);
+        inputPanel.add(lastNameField);
+        inputPanel.add(ageLabel);
+        inputPanel.add(age);
+        return inputPanel;
+    }
+
     public JPanel createInputPanel(JLabel frame,JTextField field,JButton button){
         JPanel inputPanel = new JPanel(new GridLayout(4, 1));
         inputPanel.setBackground(new Color(45, 45, 45));
@@ -85,13 +97,13 @@ public class LabelCreator {
         style.lastNameField(lastNameField);
         return lastNameField;
     }
-    public JLabel createIdLabel(){
-        JLabel idLabel = new JLabel("Enter Student ID:");
+    public JLabel createIdLabel(String text){
+        JLabel idLabel = new JLabel(text);
         idLabel.setForeground(Color.LIGHT_GRAY);
         return idLabel;
     }
-    public JLabel createLastNameLabel(){
-        JLabel lastNameLabel = new JLabel("Or Enter Last Name:");
+    public JLabel createLastNameLabel(String text){
+        JLabel lastNameLabel = new JLabel(text);
         lastNameLabel.setForeground(Color.LIGHT_GRAY);
         return lastNameLabel;
     }
@@ -108,7 +120,7 @@ public class LabelCreator {
         return resultPanel;
     }
     public JPanel createResultLabels() {
-        JPanel resultPanel = new JPanel(new GridLayout(5, 1)); // или другой layout
+        JPanel resultPanel = new JPanel(new GridLayout(5, 1));
         resultPanel.setBackground(new Color(45, 45, 45));
 
         resultIdLabel = createStyledLabel("ID: ");

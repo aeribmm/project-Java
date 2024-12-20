@@ -23,8 +23,6 @@ public class ButtonsActions {
         this.styles = styles;
         this.creator = creator;
         this.newWindow = window;
-        this.showStudentWindow = showStudentWindow;
-        this.remove = remove;
     }
 
     public void buttons(JButton showAllButton, JButton showStudentButton, JButton addStudentButton, JButton removeStudentButton, JButton updateStudentButton, JButton calculateGradeButton) {
@@ -39,6 +37,7 @@ public class ButtonsActions {
 
         showStudentButton.addActionListener(e -> {
             showStudentWindow.create();
+
         });//find by id or lastName
 
         addStudentButton.addActionListener(e -> {
