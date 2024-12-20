@@ -18,11 +18,13 @@ public class ButtonsActions {
         this(new DAO(),new WindowStyle(),new LabelCreator(),new NewStudentWindow(),new ShowStudentWindow(),new RemoveStudentWindow());
     }
 
-    public ButtonsActions(DAO dao, WindowStyle styles, LabelCreator creator,NewStudentWindow window,ShowStudentWindow showStudentWindow,RemoveStudentWindow remove) {
+    public ButtonsActions(DAO dao, WindowStyle styles, LabelCreator creator,NewStudentWindow window,ShowStudentWindow showStudentWindow,RemoveStudentWindow Aremove) {
         this.dao = dao;
         this.styles = styles;
         this.creator = creator;
         this.newWindow = window;
+        this.showStudentWindow = showStudentWindow;
+        this.remove = Aremove;
     }
 
     public void buttons(JButton showAllButton, JButton showStudentButton, JButton addStudentButton, JButton removeStudentButton, JButton updateStudentButton, JButton calculateGradeButton) {
