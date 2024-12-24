@@ -33,7 +33,6 @@ public class NewStudentWindow extends JDialog {
     }
     public void create(){
         frame = creator.createSearchFrame("Add new student to data base");
-
         nameLabel = creator.createLastNameLabel("Name: ");
         name = creator.createLastNameField();
         lastNameLabel = creator.createLastNameLabel("Last name: ");
@@ -51,6 +50,9 @@ public class NewStudentWindow extends JDialog {
         panel.add(add);
         frame.add(panel, BorderLayout.NORTH);
         frame.setVisible(true);
+        add.addActionListener(e -> {
+            check.isFull(name,lastName,age);
+        });
     }
 
 }

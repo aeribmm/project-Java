@@ -13,7 +13,6 @@ public class FindStudent {
     private JButton searchButton;
     private JPanel resultPanel;
     private LabelCreator creator;
-
     public FindStudent(LabelCreator creator) {
         this.creator = creator;
     }
@@ -30,7 +29,6 @@ public class FindStudent {
         searchButton = creator.searchButton("Search");
         resultPanel = creator.createResultLabels();
         inputPanel = creator.createInputPanel(idLabel,idField,lastNameLabel,lastNameField,searchButton);
-
         searchFrame.add(inputPanel, BorderLayout.NORTH);
         searchFrame.add(resultPanel, BorderLayout.CENTER);
         searchFrame.setVisible(true);

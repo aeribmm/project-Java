@@ -48,7 +48,8 @@ public class LabelCreator {
         }
         return new JTable(table);
     }
-    public JFrame  createSearchFrame(String text){
+
+    public JFrame createSearchFrame(String text){
         JFrame searchFrame = new JFrame(text);
         searchFrame.setSize(500, 300);
         searchFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -79,13 +80,13 @@ public class LabelCreator {
         return inputPanel;
     }
 
-    public JPanel createInputPanel(JLabel frame,JTextField field,JButton button){
+    public JPanel createInputPanel(JLabel frame,JTextField field,JButton button) {
         JPanel inputPanel = new JPanel(new GridLayout(4, 1));
         inputPanel.setBackground(new Color(45, 45, 45));
         inputPanel.add(frame);
         inputPanel.add(field);
         inputPanel.add(button);
-        return inputPanel;
+        return null;
     }
     public JTextField createIdField(){
         JTextField idField = new JTextField(15);
@@ -97,7 +98,8 @@ public class LabelCreator {
         style.lastNameField(lastNameField);
         return lastNameField;
     }
-    public JLabel createIdLabel(String text) {
+
+    public JLabel createIdLabel(String text){
         JLabel idLabel = new JLabel(text);
         idLabel.setForeground(Color.LIGHT_GRAY);
         return idLabel;
@@ -177,6 +179,4 @@ public class LabelCreator {
         idField.setText("");
         lastNameField.setText("");
     }
-
-
 }

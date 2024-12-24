@@ -18,6 +18,12 @@ public class DAO extends JFrame implements StudentManager{
     private final String generateId = "SELECT id FROM students ORDER BY id";
     private final  String checkIfExist ="SELECT COUNT(*) FROM students WHERE name = ? AND \"lastName\" = ? AND age = ?";
     private final String insertStudent = "INSERT INTO students (id,name, \"lastName\", age, grade) VALUES (?,?, ?, ?, ?)";
+
+
+    private final String deleteById = "DELETE FROM students WHERE id = ?";
+    private final String deleteByLastName = "DELETE FROM students WHERE \"lastName\" = ?";
+
+
     public List<StudentModel> getAllStudents() {
         List<StudentModel> students = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(url, username, password);
@@ -46,7 +52,7 @@ public class DAO extends JFrame implements StudentManager{
             preparedStatement.setDouble(5, student.getGrade());
             int rowsInserted = preparedStatement.executeUpdate();
             if(rowsInserted> 0){
-                JOptionPane.showMessageDialog(null,"Success");
+                JOptionPane.showMessageDialog(null,"Added","Success",JOptionPane.INFORMATION_MESSAGE);
             }else{
                 JOptionPane.showMessageDialog(null,"Failed to add student");
             }
@@ -97,10 +103,40 @@ public class DAO extends JFrame implements StudentManager{
         }
         return student;
     }
+    public void removeStudent(JTextField id, JTextField lastName) {
+        String idStr = id.getText().trim();
+        String lastNameStr = lastName.getText().trim();
 
-    public void removeStudent(String id){
+        if (idStr.isEmpty() && lastNameStr.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Enter ID or last name", "Ошибка", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try (Connection conn = DriverManager.getConnection(url, username, password);
+             PreparedStatement stmt = conn.prepareStatement(idStr.isEmpty() ? deleteByLastName : deleteById)) {
+
+            if (!idStr.isEmpty()) {
+                stmt.setString(1, idStr);
+            } else {
+                stmt.setString(1, lastNameStr);
+            }
+
+            int rowsAffected = stmt.executeUpdate();
+
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(null, "Deleted", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Student not found", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Database error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+        id.setText("");
+        lastName.setText("");
 
     }
+
     public String generateFreeId() {
         try (Connection connection = DriverManager.getConnection(url, username, password);
              Statement statement = connection.createStatement();
