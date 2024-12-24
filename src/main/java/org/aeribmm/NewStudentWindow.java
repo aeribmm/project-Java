@@ -52,6 +52,9 @@ public class NewStudentWindow extends JDialog {
         panel.add(add);
         frame.add(panel, BorderLayout.NORTH);
         frame.setVisible(true);
+        add.addActionListener(e -> {
+            check.isFull(name,lastName,age);
+        });
     }
 
 }

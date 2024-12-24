@@ -1,5 +1,6 @@
 package org.aeribmm;
 
+import javax.swing.*;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -9,6 +10,6 @@ public interface StudentManager {
     List<StudentModel> getAllStudents();
     void addStudent(StudentModel student) ;
 
-    void removeStudent(String id);
+    void removeStudent(JTextField id, JTextField lastName);
 
 }

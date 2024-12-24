@@ -7,14 +7,14 @@ import java.awt.*;
 public class WindowStyle {
 
     public void setStyleTable(JTable studentTable){
-        studentTable.setBackground(new Color(43, 43, 43));        // Тёмный фон для ячеек
-        studentTable.setForeground(Color.WHITE);                  // Белый текст
-        studentTable.setGridColor(new Color(60, 63, 65));         // Цвет сетки между ячейками
-        studentTable.setSelectionBackground(new Color(75, 110, 175));  // Цвет выделения строк
-        studentTable.setSelectionForeground(Color.WHITE);         // Текст выделенной строки
+        studentTable.setBackground(new Color(43, 43, 43));
+        studentTable.setForeground(Color.WHITE);
+        studentTable.setGridColor(new Color(60, 63, 65));
+        studentTable.setSelectionBackground(new Color(75, 110, 175));
+        studentTable.setSelectionForeground(Color.WHITE);
         JTableHeader tableHeader = studentTable.getTableHeader();
-        tableHeader.setBackground(new Color(60, 63, 65));         // Темный фон для заголовков
-        tableHeader.setForeground(Color.WHITE);                   // Белый текст заголовков
+        tableHeader.setBackground(new Color(60, 63, 65));
+        tableHeader.setForeground(Color.WHITE);
         tableHeader.setFont(new Font("SansSerif", Font.BOLD, 14));
     }
     public void searchFrameStyle(JFrame searchFrame){
