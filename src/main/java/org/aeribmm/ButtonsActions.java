@@ -11,21 +11,24 @@ public class ButtonsActions {
     private NewStudentWindow newWindow;
     private WindowStyle styles;
     private LabelCreator creator;
-
     private ShowStudentWindow showStudentWindow;
     private RemoveStudent remove;
+    private UpdateStudent update;
+    private AverageGrade average;
 
     public ButtonsActions() {
-        this(new DAO(),new WindowStyle(),new LabelCreator(),new NewStudentWindow(),new ShowStudentWindow(),new RemoveStudent());
+        this(new DAO(),new WindowStyle(),new LabelCreator(),new NewStudentWindow(),new ShowStudentWindow(),new RemoveStudent(),new UpdateStudent(),new AverageGrade());
     }
 
-    public ButtonsActions(DAO dao, WindowStyle styles, LabelCreator creator,NewStudentWindow window,ShowStudentWindow showStudent,RemoveStudent removeStudent) {
+    public ButtonsActions(DAO dao, WindowStyle styles, LabelCreator creator,NewStudentWindow window,ShowStudentWindow showStudent,RemoveStudent removeStudent,UpdateStudent updateStudent,AverageGrade avg) {
         this.dao = dao;
         this.styles = styles;
         this.creator = creator;
         this.newWindow = window;
         this.showStudentWindow = showStudent;
         this.remove = removeStudent;
+        this.update = updateStudent;
+        this.average = avg;
     }
 
     public void buttons(JButton showAllButton, JButton showStudentButton, JButton addStudentButton, JButton removeStudentButton, JButton updateStudentButton, JButton calculateGradeButton) {
@@ -51,13 +54,12 @@ public class ButtonsActions {
         });
 
         updateStudentButton.addActionListener(e -> {
-
-
+            update.create();//create update frame
         });
 
         calculateGradeButton.addActionListener(e -> {
 
-
+            average.create();
         });
     }
 }

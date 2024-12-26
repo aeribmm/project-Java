@@ -11,5 +11,7 @@ public interface StudentManager {
     void addStudent(StudentModel student) ;
 
     void removeStudent(JTextField id, JTextField lastName);
+    double calculateAverageGrade();
+    void updateStudent(String id);
 
 }

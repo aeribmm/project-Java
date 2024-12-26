@@ -174,6 +174,26 @@ public class DAO extends JFrame implements StudentManager{
         return false;
     }
 
+    public double calculateAverageGrade(){
+        double averageGrade = 0.0;
+        String query = "SELECT AVG(grade) AS average_grade FROM students";
 
+        try (Connection connection = DriverManager.getConnection(url, username, password);
+             PreparedStatement statement = connection.prepareStatement(query);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            if (resultSet.next()) {
+                averageGrade = resultSet.getDouble("average_grade");
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error while calculating average grade: " + e.getMessage());
+        }
+
+        return averageGrade;
+    }
+    public void updateStudent(String id){
+        
+    }
 
 }

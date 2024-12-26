@@ -36,6 +36,9 @@ public class Checker {
         }
         StudentModel student = new StudentModel(name,lastName,a);
         boolean exist = dao.checkIfStudentExists(student.getName(), student.getLastName(),student.getAge());
+        name1.setText("");
+        lastName1.setText("");
+        age1.setText("");
         if(!exist){
             dao.addStudent(student);
         }else {
