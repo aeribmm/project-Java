@@ -12,6 +12,6 @@ public interface StudentManager {
 
     void removeStudent(JTextField id, JTextField lastName);
     double calculateAverageGrade();
-    void updateStudent(String id);
+    void updateStudent(JTextField searchLastName,JTextField name,JTextField lastName,JTextField age,JTextField grade);
 
 }

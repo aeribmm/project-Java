@@ -192,7 +192,7 @@ public class DAO extends JFrame implements StudentManager{
 
         return averageGrade;
     }
-    public void updateStudent(String id){
+    public void updateStudent(JTextField searchLastName,JTextField name,JTextField lastName,JTextField age,JTextField grade){
         
     }
 

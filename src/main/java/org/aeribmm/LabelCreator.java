@@ -79,15 +79,6 @@ public class LabelCreator {
         inputPanel.add(age);
         return inputPanel;
     }
-
-    public JPanel createInputPanel(JLabel frame,JTextField field,JButton button) {
-        JPanel inputPanel = new JPanel(new GridLayout(4, 1));
-        inputPanel.setBackground(new Color(45, 45, 45));
-        inputPanel.add(frame);
-        inputPanel.add(field);
-        inputPanel.add(button);
-        return null;
-    }
     public JTextField createIdField(){
         JTextField idField = new JTextField(15);
         style.idField(idField);
@@ -115,12 +106,6 @@ public class LabelCreator {
         searchButton.setForeground(Color.WHITE);
         return searchButton;
     }
-
-    public JPanel createResultPanel(){
-        JPanel resultPanel = new JPanel(new GridLayout(5, 1));
-        resultPanel.setBackground(new Color(45, 45, 45));
-        return resultPanel;
-    }
     public JPanel createResultLabels() {
         JPanel resultPanel = new JPanel(new GridLayout(5, 1));
         resultPanel.setBackground(new Color(45, 45, 45));
@@ -139,7 +124,7 @@ public class LabelCreator {
 
         return resultPanel;
     }
-    public JLabel createStyledLabel(String text) {
+    public JLabel  createStyledLabel(String text) {
         JLabel label = new JLabel(text);
         label.setForeground(Color.LIGHT_GRAY);
         return label;
@@ -179,4 +164,58 @@ public class LabelCreator {
         idField.setText("");
         lastNameField.setText("");
     }
+    public JPanel createUpdatePanel(JLabel a, JTextField a1,JLabel a2, JTextField a3,JLabel b, JTextField b1 ,JLabel b2 ,JTextField b3,JButton button){
+        JPanel inputPanel = new JPanel(new GridLayout(5, 2,10,10));
+        inputPanel.setBackground(new Color(45, 45, 45));
+        inputPanel.add(a);
+        inputPanel.add(a1);
+        inputPanel.add(a2);
+        inputPanel.add(a3);
+        inputPanel.add(b);
+        inputPanel.add(b1);
+        inputPanel.add(b2);
+        inputPanel.add(b3);
+        inputPanel.add(new JLabel());
+        inputPanel.add(button);
+        return inputPanel;
+    }
+    public void handleSearchButtonClick(JPanel leftPanel,JFrame searchFrame,JTextField lastNameField) {
+        String lastName = lastNameField.getText().trim();
+        StudentModel student = null;
+        if(!lastName.isEmpty()){
+            student = dao.searchByLastName(lastName.trim());
+        }else{
+            JOptionPane.showMessageDialog(
+                    searchFrame,
+                    "Cannot find with empty last name",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+        if (student != null) {
+            leftPanel.removeAll();
+            leftPanel.add(resultIdLabel);
+            leftPanel.add(resultNameLabel);
+            leftPanel.add(resultLastNameLabel);
+            leftPanel.add(resultAgeLabel);
+            leftPanel.add(resultGradeLabel);
+            resultIdLabel.setText("ID: " + student.getId());
+            resultNameLabel.setText("Name: " + student.getName());
+            resultLastNameLabel.setText("Last name: " + student.getLastName());
+            resultAgeLabel.setText("Age: " + student.getAge());
+            resultGradeLabel.setText("Grade: " + student.getGrade());
+            leftPanel.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(
+                    searchFrame,
+                    "Student not found",
+                    "Results",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+        }
+        searchFrame.revalidate();
+        searchFrame.repaint();
+        lastNameField.setText("");
+    }
+
 }

@@ -58,7 +58,6 @@ public class ButtonsActions {
         });
 
         calculateGradeButton.addActionListener(e -> {
-
             average.create();
         });
     }

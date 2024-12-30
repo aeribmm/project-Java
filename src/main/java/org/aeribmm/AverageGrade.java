@@ -22,7 +22,7 @@ public class AverageGrade {
     public void create(){
         average = dao.calculateAverageGrade();
         frame = creator.createSearchFrame("Average Grade");
-        text = creator.createStyledLabel("Average Grade: " + average);
+        text = creator.createStyledLabel("Average Grade: " + String.format("%.2f",average));
         text.setHorizontalAlignment(SwingConstants.CENTER);
         frame.add(text,BorderLayout.CENTER);
         frame.setVisible(true);
