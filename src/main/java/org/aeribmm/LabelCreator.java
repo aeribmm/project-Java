@@ -215,7 +215,6 @@ public class LabelCreator {
         }
         searchFrame.revalidate();
         searchFrame.repaint();
-        lastNameField.setText("");
     }
 
 }

@@ -23,7 +23,6 @@ public class UpdateStudent {
     private JLabel newGradeLabel;
     private JButton updateButton;
     private JTextField newNameField;
-
     private JTextField newLastNameField;
     private JTextField newAgeField;
     private JTextField newGradeField;
@@ -50,8 +49,8 @@ public class UpdateStudent {
         searchPanel.add(searchField);
         searchPanel.add(searchButton);
 
-        //
-        centerPanel = new JPanel(new GridLayout(1, 2, 10, 10)); // 1 строка, 2 столбца
+        //center panel
+        centerPanel = new JPanel(new GridLayout(1, 2, 10, 10));
         centerPanel.setBackground(new Color(45, 45, 45));
         //leftPanel
 

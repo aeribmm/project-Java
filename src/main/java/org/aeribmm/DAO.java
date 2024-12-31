@@ -18,8 +18,6 @@ public class DAO extends JFrame implements StudentManager{
     private final String generateId = "SELECT id FROM students ORDER BY id";
     private final  String checkIfExist ="SELECT COUNT(*) FROM students WHERE name = ? AND \"lastName\" = ? AND age = ?";
     private final String insertStudent = "INSERT INTO students (id,name, \"lastName\", age, grade) VALUES (?,?, ?, ?, ?)";
-
-
     private final String deleteById = "DELETE FROM students WHERE id = ?";
     private final String deleteByLastName = "DELETE FROM students WHERE \"lastName\" = ?";
 
@@ -189,11 +187,94 @@ public class DAO extends JFrame implements StudentManager{
         } catch (SQLException e) {
             System.err.println("Error while calculating average grade: " + e.getMessage());
         }
-
         return averageGrade;
     }
     public void updateStudent(JTextField searchLastName,JTextField name,JTextField lastName,JTextField age,JTextField grade){
-        
+
+        // Получаем фамилию студента, данные которого нужно обновить
+        String searchLastNameValue = searchLastName.getText().trim();
+        if (searchLastNameValue.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please enter the last name of the student to search.", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        try {
+            int ageInt = Integer.parseInt(age.getText().trim());
+            if (ageInt < 0 || ageInt > 100) {
+                JOptionPane.showMessageDialog(null, "Age must be between 0 and 100", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Invalid age value", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        try {
+            double gradeDouble = Double.parseDouble(grade.getText().trim());
+            if (gradeDouble < 0 || gradeDouble > 100) {
+                JOptionPane.showMessageDialog(null, "Grade must be between 0 and 100", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Invalid grade value", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        // Создаем строку для SQL запроса
+        StringBuilder updateQuery = new StringBuilder("UPDATE students SET ");
+        boolean isFirstField = true;
+
+        // Проверяем каждое поле и добавляем его в запрос, если оно заполнено
+        if (!name.getText().trim().isEmpty()) {
+            updateQuery.append("name = ? ");
+            isFirstField = false;
+        }
+        if (!lastName.getText().trim().isEmpty()) {
+            if (!isFirstField) updateQuery.append(", ");
+            updateQuery.append("\"lastName\" = ? ");
+            isFirstField = false;
+        }
+        if (!age.getText().trim().isEmpty()) {
+            if (!isFirstField) updateQuery.append(", ");
+            updateQuery.append("age = ? ");
+            isFirstField = false;
+        }
+        if (!grade.getText().trim().isEmpty()) {
+            if (!isFirstField) updateQuery.append(", ");
+            updateQuery.append("grade = ? ");
+        }
+
+        // Если ничего не заполнено, выводим сообщение
+        if (isFirstField) {
+            JOptionPane.showMessageDialog(null, "No fields were filled to update.","Warning",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        updateQuery.append("WHERE \"lastName\" = ?");
+        System.out.println("Generated query: " + updateQuery.toString());
+        try (Connection connection = DriverManager.getConnection(url, username, password);
+             PreparedStatement preparedStatement = connection.prepareStatement(updateQuery.toString())) {
+
+            int index = 1;
+            if (!name.getText().trim().isEmpty()) {
+                preparedStatement.setString(index++, name.getText().trim());
+            }
+            if (!lastName.getText().trim().isEmpty()) {
+                preparedStatement.setString(index++, lastName.getText().trim());
+            }
+            if (!age.getText().trim().isEmpty()) {
+                preparedStatement.setInt(index++, Integer.parseInt(age.getText().trim()));
+            }
+            if (!grade.getText().trim().isEmpty()) {
+                preparedStatement.setDouble(index++, Double.parseDouble(grade.getText().trim()));
+            }
+            preparedStatement.setString(index, searchLastNameValue);
+            int rowsUpdated = preparedStatement.executeUpdate();
+            if (rowsUpdated > 0) {
+                JOptionPane.showMessageDialog(null, "Данные успешно обновлены.");
+            } else {
+                JOptionPane.showMessageDialog(null, "Студент с такой фамилией не найден.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Ошибка обновления данных: " + e.getMessage());
+        }
     }
 
 }
